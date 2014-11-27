@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <link rel="icon" href="../../favicon.ico">
+
+  <title>Corpcarshare</title>
+
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.1/jquery-ui.js"></script>
+
+  <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.8/jquery.validate.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+
+  <!-- Latest compiled and minified CSS -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+  <!-- Latest compiled and minified JavaScript -->
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+
+  <div class="container">
+
+    <div class="header">
+      <ul class="nav nav-pills pull-right">
+        <li class="active"><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <h3 class="text-muted">CarShare</h3>
+    </div>
+
+
+    <form class="form-horizontal" role="form" method = 'POST' action = ''> {% csrf_token %}
+
+
+
+     <div class="form-group">
+
+      {{ form.email.errors }}
+      <h4><label for="email" class="col-sm-0 control-label">Email</label></h4>
+      <h4>{{ form.email }}</h4>
+
+
+    </div>
+
+
+    <div class="form-group">
+
+      {{ form.homezip.errors }}
+      <h4><label for="homezip" class="col-sm-0 control-label">Home Zipcode</label></h4>
+      <h4>{{ form.homezip }}</h4>
+
+
+    </div>
+
+
+    <div class="form-group">
+
+      {{ form.workname.errors }}
+      <h4><label for="workname" class="col-sm-0 control-label">Company Name</label></h4>
+      <h4>{{ form.workname }}</h4>
+
+
+      {{ form.workaddr.errors }}
+      <h4><label for="workaddr" class="col-sm-0 control-label">Company Addresss</label></h4>
+      <h4>{{ form.workaddr }}</h4>
+
+
+      {{ form.workzip.errors }}
+      <h4><label for="workzip" class="col-sm-0 control-label">Company Zipcode</label></h4>
+      <h4>{{ form.workzip }}</h4>
+
+
+    </div>
+
+
+
+    <script type = "text/javascript">
+
+
+
+    $(document).ready(function(){
+
+    var compname = {{ name|safe }};
+    var address = {{ address|safe }}
+
+     $( "input#id_workname" ).autocomplete({
+                            source: compname, 
+                            minLength: 2
+        });
+
+     $( "input#id_workaddr" ).autocomplete({
+                            source: address, 
+                            minLength: 2
+        });
+
+
+
+
+    });
+ 
+
+    </script>
+
+
+
+    <input class="btn btn-lg btn-success" type="submit" value="Join Now">
+  </form>
+
+
+
+  <div class = "row marketing"> 
+
+
+    {% for post in object_list%}
+    <li>
+    <h4 class="text-success"> <a class="text-success" href="mailto: {{post.email}}"> {{post.email}}</a>: {{post.homezip|safe}} &#8596; {{post.workname|safe}}, {{post.workaddr|safe}}, {{post.workzip|safe}} {{post.date|safe}}</h4>
+    </li>
+
+    {% endfor %}
+
+
+
+
+
+    </div>
+
+
+  <div class="footer">
+    <p>&copy; Company 2014</p>
+  </div>
+
+</div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+  </body>
+  </html>
